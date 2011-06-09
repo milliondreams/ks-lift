@@ -1,6 +1,16 @@
 h1. Kickstart Lift
 h2. Purpose
+
 The purpose of this project is to build a lift/akka/mongodb application that can serve as a base to a twitter like site and also a guide to building scalable lift applications.
+
+h2. How to run this
+
+This is a maven based lift project and uses MongoDB for backend. To run this you'll need mongodb runnign on localhost and maven installed.
+
+# checkout the project
+# go to the checkout folder
+# run [mvn jetty:run]
+
 
 h2. What is done
 # User data storage in MongoDB using Custom Proto User (Work done by GhostM)
