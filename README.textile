@@ -1,16 +1,16 @@
-.h1 Kickstart Lift
-.h2 Purpose
+h1. Kickstart Lift
+h2. Purpose
 The purpose of this project is to build a lift/akka/mongodb application that can serve as a base to a twitter like site and also a guide to building scalable lift applications.
 
-.h2 What is done
+h2. What is done
 # User data storage in MongoDB using Custom Proto User (Work done by GhostM)
 # Embeded Profile object and Profile edit link once the user logs in
 
-.h2 Work in progress
+h2. Work in progress
 # Activity stream model
 # Publishing to Activity stream
 
-.h3 To Be Done
+h3. To Be Done
 # Allow users to follow others
 # Allow users to search others
 # Allow user to view others profiles
