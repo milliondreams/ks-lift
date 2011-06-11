@@ -25,10 +25,16 @@ class Boot {
     // where to search snippet
     LiftRules.addToPackages("com.tingendab.kslift")
 
+    //Set the template format to XHTML and the Output to HTML5
+    //LiftRules.htmlProperties.default.set((r: Req) => new XHtmlInHtml5OutProperties(r.userAgent))
+    // Use HTML5 for rendering
+    LiftRules.htmlProperties.default.set((r: Req) => new Html5Properties(r.userAgent)) 
+
     // Build SiteMap
     def sitemap() = SiteMap(
       Menu("Home") / "index" >> User.AddUserMenusAfter, // Simple menu form
-      Menu("Profile") / "user/profile" >> If(User.loggedIn_? _, S ? "Not available"),
+      Menu("Profile") / "user" / "profile" >> If(User.loggedIn_? _, S ? "Not available"),
+      Menu("Browse Users") / "user" / "browse" >> If(User.loggedIn_? _, S ? "Not available"),
       // Menu with special Link
       Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
 	       "Static Content")))
@@ -39,27 +45,27 @@ class Boot {
     /*
      * Show the spinny image when an Ajax call starts
      */
-    LiftRules.ajaxStart =
-      Full(() => LiftRules.jsArtifacts.show("ajax-loader").cmd)
+     LiftRules.ajaxStart =
+       Full(() => LiftRules.jsArtifacts.show("ajax-loader").cmd)
 
-    /*
-     * Make the spinny image go away when it ends
-     */
-    LiftRules.ajaxEnd =
-      Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
+     /*
+      * Make the spinny image go away when it ends
+      */
+     LiftRules.ajaxEnd =
+       Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
 
-    LiftRules.early.append(makeUtf8)
+     LiftRules.early.append(makeUtf8)
 
-    LiftRules.loggedInTest = Full(() => User.loggedIn_?)
+     LiftRules.loggedInTest = Full(() => User.loggedIn_?)
     
-    SetupMongo.setup
+     SetupMongo.setup
 
-  }
+     }
 
-  /**
-   * Force the request to be UTF-8
-   */
-  private def makeUtf8(req: HTTPRequest) {
-    req.setCharacterEncoding("UTF-8")
-  }
-}
+     /**
+      * Force the request to be UTF-8
+      */
+     private def makeUtf8(req: HTTPRequest) {
+        req.setCharacterEncoding("UTF-8")
+      }
+     }

@@ -98,6 +98,12 @@
             <version>${scala.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.foursquare</groupId>
+            <artifactId>rogue_2.8.1</artifactId>
+            <version>1.0.14-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -157,7 +163,7 @@
                 <version>6.1.25</version>
                 <configuration>
                     <contextPath>/</contextPath>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <scanIntervalSeconds>20</scanIntervalSeconds>
                 </configuration>
             </plugin>
             <plugin>
@@ -212,6 +218,11 @@
                 <configuration>
                     <charset>${project.build.sourceEncoding}</charset>
                     <jvmArgs>
+                        <jvmArg>-server</jvmArg>
+                        <jvmArg>-XX:+CMSPermGenSweepingEnabled</jvmArg>
+                        <jvmArg>-XX:+CMSClassUnloadingEnabled</jvmArg>
+                        <jvmArg>-XX:PermSize=128M</jvmArg>
+                        <jvmArg>-XX:MaxPermSize=512m</jvmArg>
                         <jvmArg>-Xmx1024m</jvmArg>
                         <jvmArg>-DpackageLinkDefs=file://${project.build.directory}/packageLinkDefs.properties</jvmArg>
                     </jvmArgs>
