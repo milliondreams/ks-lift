@@ -162,8 +162,17 @@
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.25</version>
                 <configuration>
+                    <jvmArgs>
+                        <jvmArg>-server</jvmArg>
+                        <jvmArg>-XX:+CMSPermGenSweepingEnabled</jvmArg>
+                        <jvmArg>-XX:+CMSClassUnloadingEnabled</jvmArg>
+                        <jvmArg>-XX:PermSize=128M</jvmArg>
+                        <jvmArg>-XX:MaxPermSize=512m</jvmArg>
+                        <jvmArg>-Xmx1024m</jvmArg>    
+                    </jvmArgs>
                     <contextPath>/</contextPath>
-                    <scanIntervalSeconds>20</scanIntervalSeconds>
+                    <reload>manual</reload>
+                    <!-- scanIntervalSeconds>0</scanIntervalSeconds -->
                 </configuration>
             </plugin>
             <plugin>
@@ -218,11 +227,6 @@
                 <configuration>
                     <charset>${project.build.sourceEncoding}</charset>
                     <jvmArgs>
-                        <jvmArg>-server</jvmArg>
-                        <jvmArg>-XX:+CMSPermGenSweepingEnabled</jvmArg>
-                        <jvmArg>-XX:+CMSClassUnloadingEnabled</jvmArg>
-                        <jvmArg>-XX:PermSize=128M</jvmArg>
-                        <jvmArg>-XX:MaxPermSize=512m</jvmArg>
                         <jvmArg>-Xmx1024m</jvmArg>
                         <jvmArg>-DpackageLinkDefs=file://${project.build.directory}/packageLinkDefs.properties</jvmArg>
                     </jvmArgs>

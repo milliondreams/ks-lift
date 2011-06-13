@@ -33,8 +33,9 @@ class Boot {
     // Build SiteMap
     def sitemap() = SiteMap(
       Menu("Home") / "index" >> User.AddUserMenusAfter, // Simple menu form
-      Menu("Profile") / "user" / "profile" >> If(User.loggedIn_? _, S ? "Not available"),
+      Menu("My Profile") / "user" / "profile" >> If(User.loggedIn_? _, S ? "Not available"),
       Menu("Browse Users") / "user" / "browse" >> If(User.loggedIn_? _, S ? "Not available"),
+      Menu("User Profile") / "profile" >> Hidden,
       // Menu with special Link
       Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
 	       "Static Content")))
@@ -58,6 +59,10 @@ class Boot {
 
      LiftRules.loggedInTest = Full(() => User.loggedIn_?)
     
+    LiftRules.statelessRewrite.append {
+      case RewriteRequest(ParsePath("profile" :: key :: Nil,"",true,_),_,_) =>
+           RewriteResponse("profile" :: Nil, Map("userid" -> key))
+    }
      SetupMongo.setup
 
      }
