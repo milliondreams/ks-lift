@@ -15,7 +15,6 @@ import JsCmds._
 import JE._
 import scala.xml._
 import com.tingendab.kslift.model._
-import com.foursquare.rogue.Rogue._
 import net.liftweb.json.JsonDSL._
 //import net.liftweb.mongodb.record._
 
@@ -56,6 +55,7 @@ class UserSnippet extends StatefulSnippet{
     Conversation.createRecord
     .title("Friendship request from " + sender.profile.is.displayName)
     .mode(ConversationMode.restricted)
+    .memberUsers(fromUser::toUser::Nil)
     .save
     
     //Todo: Allow to attach personal message
@@ -70,7 +70,7 @@ class UserSnippet extends StatefulSnippet{
           "#name" #> profileUser.profile.is.displayName.toString
           User.currentUser match {
             case Full(currentUser) =>
-              if(currentUser._id == profileUser._id){
+              if(currentUser._id.toString == profileUser._id.toString){
                 "#action" #> SHtml.link("/user/profile", ()=>"Edit profile", Text("Edit profile"))
               }else{
                 //TODO: If the user is already friend
