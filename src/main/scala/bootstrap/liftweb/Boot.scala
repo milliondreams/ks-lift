@@ -35,6 +35,7 @@ class Boot {
       Menu("Home") / "index" >> User.AddUserMenusAfter, // Simple menu form
       Menu("My Profile") / "user" / "profile" >> If(User.loggedIn_? _, S ? "Not available"),
       Menu("Browse Users") / "user" / "browse" >> If(User.loggedIn_? _, S ? "Not available"),
+      Menu("Message Center") / "user" / "msgcenter" >> If(User.loggedIn_? _, S ? "Not available"),
       Menu("User Profile") / "profile" >> Hidden,
       // Menu with special Link
       Menu(Loc("Static", Link(List("static"), true, "/static/index"), 

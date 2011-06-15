@@ -19,7 +19,7 @@ class Conversation private() extends MongoRecord[Conversation] with ObjectIdPk[C
   def meta = Conversation
   object title extends StringField(this, 100)
   object mode extends EnumField(this,ConversationMode)
-  object memberUsers extends BsonRecordField(this,MemberUser)
+  object memberUsers extends MongoListField[Conversation, ObjectIdField[User]](this)
   object creator extends ObjectIdRefField(this, User)
   object messages extends BsonRecordListField(this, Message)
 }

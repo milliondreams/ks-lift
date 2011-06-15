@@ -55,7 +55,9 @@ class UserSnippet extends StatefulSnippet{
     Conversation.createRecord
     .title("Friendship request from " + sender.profile.is.displayName)
     .mode(ConversationMode.restricted)
-    .memberUsers(fromUser::toUser::Nil)
+    .memberUsers(sender._id::reciever._id::Nil)
+    .messages(msg::Nil)
+    .creator(sender._id.is)
     .save
     
     //Todo: Allow to attach personal message
