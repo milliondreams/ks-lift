@@ -9,6 +9,7 @@ import net.liftweb.common._
 import net.liftweb.json.JsonAST.JString
 import net.liftweb.json.JsonDSL._
 import com.tingendab.kslift.lib._
+import org.bson.types.ObjectId
 
 object ConversationMode extends Enumeration{
   type ConversationMode = Value
@@ -19,7 +20,7 @@ class Conversation private() extends MongoRecord[Conversation] with ObjectIdPk[C
   def meta = Conversation
   object title extends StringField(this, 100)
   object mode extends EnumField(this,ConversationMode)
-  object memberUsers extends MongoListField[Conversation, ObjectIdField[User]](this)
+  object memberUsers extends MongoListField[Conversation, ObjectId](this)
   object creator extends ObjectIdRefField(this, User)
   object messages extends BsonRecordListField(this, Message)
 }

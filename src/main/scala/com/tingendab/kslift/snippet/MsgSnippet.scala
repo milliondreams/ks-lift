@@ -22,9 +22,9 @@ class MsgSnippet {
   def listMsg = {
     User.currentUser match {
       case Full(user) => {
-          val qry = QueryBuilder.start("memberUsers").is(user._id.toString).get
-          //".msgdisplay" #> Conversation.findAll("memberUsers" -> user._id.toString).map{conv =>
-          ".msgdisplay" #> Conversation.findAll(qry).map{conv =>
+          //val qry = QueryBuilder.start("memberUsers").is(user._id.is).get
+          ".msgdisplay" #> Conversation.findAll("memberUsers" -> ("$oid" -> user._id.toString)).map{conv =>
+          //".msgdisplay" #> Conversation.findAll(qry).map{conv =>
             <li>{conv.title.is}</li>
           }
         }
