@@ -10,6 +10,7 @@ import net.liftweb.common._
 import net.liftweb.json.JsonAST.JString
 import net.liftweb.json.JsonDSL._
 import com.tingendab.kslift.lib._
+import org.bson.types.ObjectId
     
 /**
  * An O-R mapped "User" class that includes first name, last name, password and we add a "Personal Essay" to it
@@ -17,11 +18,24 @@ import com.tingendab.kslift.lib._
 class User extends MegaProtoUser[User]{
   def meta = User // what's the "meta" server
       
-  //object relationships extends MongoMapField[User, User](this)
+  object relationships extends BsonRecordListField(this,Relationship)
       
   object profile extends BsonRecordField[User, Person](this, Person)
       
 }
+
+object RelationType extends Enumeration {
+  type RelationType = Value
+  val friend, fiance, relative, brother, sister = Value  
+}
+
+case class Relationship private() extends BsonRecord[Relationship]{
+  def meta = Relationship
+  object relationType extends EnumField(this, RelationType)
+  object relatedTo extends ObjectIdRefField(this, User)
+}
+
+object Relationship extends Relationship with BsonMetaRecord[Relationship]
 
 /**
  * The singleton that has methods for accessing the database
@@ -32,6 +46,11 @@ object User extends User with MetaMegaProtoUser[User] {
 
   // comment this line out to require email validations
   override def skipEmailValidation = true
+  
+  override def signupFields: List[FieldPointerType] = List(firstName,
+                                                  lastName,
+                                                  email,
+                                                  password)
       
   override def editFields: List[FieldPointerType] = List(firstName,
                                                          lastName,

@@ -28,12 +28,25 @@ class UserSnippet extends StatefulSnippet{
   var filter = ""
   def listUsers = {
     if(filter == ""){
-      ".userDisplay *" #> User.findAll.map(user => <li><a href={"/profile/" + user._id}>{user.profile.is.displayName}</a></li>)
+      "li *" #> manyUsers(User.findAll) 
     }else{
-      ".userDisplay *" #> User.findAll("profile.displayName" -> filter).map(user => <li><a href={"/profile/" + user._id}>{user.profile.is.displayName}</a></li>)
+      "li *" #> manyUsers (User.findAll("profile.displayName" -> filter))
     }
   }
   
+  def manyUsers(users:List[User]) = users.map(user => singleUser(user))
+  
+  def singleUser(user:User):CssSel = {
+    var name = "" 
+    if(user.profile.is.displayName.toString.length == 0) 
+      name = user.email.toString 
+    else 
+      name = user.profile.is.displayName.toString
+    
+    ".name *" #> name &
+    ".name [href]" #> "/profile/%s".format(user._id.toString)
+  }
+
   lazy val profileUser = User.find("_id" -> S.param("userid").map(_.toString).openOr("0"))
   
   def sendFriendRequest(sender: User, reciever:User) = {
