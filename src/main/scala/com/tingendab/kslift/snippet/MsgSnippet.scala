@@ -60,12 +60,12 @@ class MsgSnippet {
           friend match {
             case Full(f) => {    
                 val relUser = Relationship.createRecord.relationType(RelationType.friend).relatedTo(f._id.is)
-                user.relationships.atomicUpdate{relUser::_}
-                //user.save
+                user.relationships.atomicUpdate{List(relUser):::_}
+                user.save
                 
                 val relFriend = Relationship.createRecord.relationType(RelationType.friend).relatedTo(user._id.is)
-                f.relationships.atomicUpdate{relFriend::_}
-                //f.save
+                f.relationships.atomicUpdate{List(relFriend):::_}
+                f.save
                 
                 Alert("Relationship established!")
              }
