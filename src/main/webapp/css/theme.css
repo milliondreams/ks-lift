@@ -1,0 +1,36 @@
+/* 
+    Document   : base
+    Created on : Jun 22, 2011, 10:58:00 PM
+    Author     : Rohit
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+body{
+    background-color: #FFFFFF;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.19, rgb(255,255,255)),
+        color-stop(1, rgb(189,182,189))
+        );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(255,255,255) 19%,
+        rgb(189,182,189) 100%
+        );
+}
+
+.container{
+    background-color: #008AB8;
+}

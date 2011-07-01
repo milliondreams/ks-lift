@@ -11,7 +11,13 @@ import net.liftweb.json.JsonAST.JString
 import net.liftweb.json.JsonDSL._
 import com.tingendab.kslift.lib._
 import org.bson.types.ObjectId
-    
+
+
+object RelationType extends Enumeration {
+  type RelationType = Value
+  val friend, fiance, relative, brother, sister = Value  
+}
+
 /**
  * An O-R mapped "User" class that includes first name, last name, password and we add a "Personal Essay" to it
  */
@@ -22,14 +28,22 @@ class User extends MegaProtoUser[User]{
       
   object profile extends BsonRecordField[User, Person](this, Person)
       
+  def getDisplayName:String = {
+    if(profile.is.displayName.is.length <= 0){
+      println("Will use name -- " + firstName.is)
+      return firstName.is + " " + lastName.is
+    }else{
+      println("Will use display name -- " + profile.is.displayName.is)
+      return profile.is.displayName.is
+    }
+  }
+  
+  def isRelated(relUser:User, relType:RelationType.Value):Boolean = {
+    !(relationships.is.find(r => r.relationType.is == RelationType.friend && r.relatedTo.is ==  relUser._id.is).isEmpty)
+  }
 }
 
-object RelationType extends Enumeration {
-  type RelationType = Value
-  val friend, fiance, relative, brother, sister = Value  
-}
-
-case class Relationship private() extends BsonRecord[Relationship]{
+class Relationship private() extends BsonRecord[Relationship]{
   def meta = Relationship
   object relationType extends EnumField(this, RelationType)
   object relatedTo extends ObjectIdRefField(this, User)
@@ -48,9 +62,9 @@ object User extends User with MetaMegaProtoUser[User] {
   override def skipEmailValidation = true
   
   override def signupFields: List[FieldPointerType] = List(firstName,
-                                                  lastName,
-                                                  email,
-                                                  password)
+                                                           lastName,
+                                                           email,
+                                                           password)
       
   override def editFields: List[FieldPointerType] = List(firstName,
                                                          lastName,
@@ -82,15 +96,22 @@ class Person extends BsonRecord[Person]{
    * This field SHOULD NOT be used to represent a user's username (e.g. jsmarr or daveman692); the latter should be represented by the preferredUsername 
    * field. */
   
-  object birthday extends DateField(this)
+  object birthday extends DateField(this){
+    override def optional_? = true
+  }
   /* The birthday of this person. The value MUST be a valid xs:date (e.g. 1975-02-14. The year value MAY be set to 0000 when 
    * the age of the Person is private or the year is not available. */
   
-  object anniversary extends DateField(this)
+  object anniversary extends DateField(this){
+    override def optional_? = true
+  }
   /* The wedding anniversary of this person. The value MUST be a valid xs:date (e.g. 1975-02-14. The year 
    * value MAY be set to 0000 when the year is not available. */
   
-  object gender extends EnumField(this, Gender)
+  object gender extends EnumField(this, Gender){
+    override def defaultValue = Gender.Undisclosed
+    override def optional_? = true
+  }
   /* The gender of this person. Service Providers SHOULD return one of the following Canonical Values, if appropriate: 
    * male, female, or undisclosed, and MAY return a different value if it is not covered by one of these Canonical Values. */
   // note: // NOT SUPPORTES
@@ -194,20 +215,22 @@ class Address private() extends BsonRecord[Address]{
   /* The full mailing address, formatted for display or use with a mailing label. This field MAY contain newlines. 
    * This is the Primary Sub-Field for this field, for the purposes of sorting and filtering. */
 
-  object streetAddress extends StringField(this, 200)
+  object streetAddress extends OptionalStringField(this, 200)
   /* The full street address component, which may include house number, street name, PO BOX, and 
    * multi-line extended street address information. This field MAY contain newlines. */
 
-  object locality extends StringField(this, 200)
+  object locality extends OptionalStringField(this, 200)
   /* The city or locality component. */
 
-  object region extends StringField(this, 200)
+  object region extends OptionalStringField(this, 200)
   /* The state or region component. */
 
-  object postalCode extends StringField(this, 10)
+  object postalCode extends OptionalStringField(this, 10)
   /* The zipcode or postal code component. */
 
-  object country extends CountryField(this)
+  object country extends CountryField(this){
+    override def optional_? = true
+  }
   /* The country name component. */
 
 }
@@ -232,7 +255,7 @@ class Organization private() extends BsonRecord[Organization]{
   object title extends StringField(this, 20)
   /* The job title or organizational role within this organization. */
 
-  object organizationType extends StringField(this, 20)
+  object organizationType extends OptionalStringField(this, 20)
   /* The type of organization, with Canonical Values job and school. */
 
   object startDate extends StringField(this,20)

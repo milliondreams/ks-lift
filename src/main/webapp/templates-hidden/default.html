@@ -1,99 +1,188 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:lift="http://liftweb.net/">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    
-		<title>com.tingendab:ks-lift:1.0-SNAPSHOT</title>
-    <style class="lift:CSS.blueprint" ></style>
-    <style class="lift:CSS.fancyType" ></style>
-    <script id="jquery" src="/classpath/jquery.js" type="text/javascript"></script>
-    <script id="json" src="/classpath/json.js" type="text/javascript"></script>
-    <style type="text/css">
-/* <![CDATA[ */
-.edit_error_class {
-  display: block;
-  color: red;
-}
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <title>amarok - Social networking with a purpose</title>
+        <!-- for the menu -->
+        <link rel="stylesheet" type="text/css" href="/css/ddm/css/dropdown/themes/nvidia.com/helper.css"></link>
+        <link rel="stylesheet" type="text/css" href="/css/ddm/css/dropdown/dropdown.css"></link>
+        <link rel="stylesheet" type="text/css" href="/css/ddm/css/dropdown/themes/nvidia.com/default.advanced.css"></link>
+        <!-- END -->
+        <style class="lift:CSS.blueprint" ></style>
+        <style class="lift:CSS.fancyType" ></style>
+        <link rel="stylesheet" href="/css/theme.css" type="text/css"></link>
+        <script id="jquery" src="/classpath/jquery.js" type="text/javascript"></script>
+        <script id="json" src="/classpath/json.js" type="text/javascript"></script>
 
-.lift_error {
-  color: red;
-}
+        <style type="text/css">
+            /* <![CDATA[ */
+            .edit_error_class {
+                display: block;
+                color: red;
+            }
 
-.lift_warning {
-  color: yellow;
-}
+            .lift_error {
+                color: red;
+            }
 
-.lift_notice {
-}
+            .lift_warning {
+                color: yellow;
+            }
 
-.sidebar ul {
-	margin:0;
-	padding:0;
-	border-bottom:1px solid #ccc;
-}
-	 
+            .lift_notice {
+            }
 
-.sidebar ul li {
-	margin:0;
-	padding:0;
-	list-style:none;
-	border:1px solid #ccc;
-	border-bottom:none;
-}
-
-.sidebar ul li a {
-	display:block;
-	padding:3px;
-	text-indent:30px;
-	text-decoration:none;
-}
-
-.sidebar ul li span {
-	display:block;
-	padding:3px;
-	text-indent:30px;
-	text-decoration:none;
-}
-
-.sidebar ul li a:hover {
-	background-color: #eee;
-}
+            .sidebar ul {
+                margin:0;
+                padding:0;
+                border-bottom:1px solid #ccc;
+            }
 
 
-  /* ]]> */
-  </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="column span-12 last" style="text-align: right">
-        <h1 class="alt">ks-lift<img alt="" id="ajax-loader" style="display:none; margin-bottom: 0px; margin-left: 5px" src="/images/ajax-loader.gif"/></h1>
-      </div>
+            .sidebar ul li {
+                margin:0;
+                padding:0;
+                list-style:none;
+                border:1px solid #ccc;
+                border-bottom:none;
+            }
 
-      <hr/>
+            .sidebar ul li a {
+                display:block;
+                padding:3px;
+                text-indent:30px;
+                text-decoration:none;
+            }
 
-      <div class="column span-6 colborder sidebar">
-        <hr class="space" />
-        <span class="lift:Menu.builder" ></span>	
-        <div>
-          <span class="lift:Msgs?showAll=true"></span>
-          <hr class="space" />
+            .sidebar ul li span {
+                display:block;
+                padding:3px;
+                text-indent:30px;
+                text-decoration:none;
+            }
+
+            .sidebar ul li a:hover {
+                background-color: #eee;
+            }
+
+            /* Rohit */
+            .alt{
+                color: #B71200;
+                margin: 2px 0px;
+                font-size: 4em;
+            }
+
+            .headerContent{
+                margin-bottom: 5px;
+            }
+
+            ul.dropdown li.ddselected {
+                padding: 7px 10px;
+                background-color: #111111;
+                color: #228888;                
+            }
+
+            #loginbox input{
+                margin: 0;
+                padding: 2px 3px;
+            }
+
+            #loginbox tr{
+                display: table-cell;
+            }
+
+            #loginbox tr:first-child {
+                display: none;
+            }
+
+            #loginbox table {
+                margin: 2px 0 0;
+                padding: 0 0 4px;
+            }
+
+            #loginbox input[type=submit]{
+                background-color: #3A6775;
+                border: medium none;
+                cursor: pointer;
+                margin: -1px 0 0;
+                padding: 4px 20px;
+            }
+
+            a{
+                color: #B79C00;
+            }
+
+            #loginbox tr{
+                background-color: transparent;
+                width: auto;
+            }
+
+            #loginbox tr td{
+                padding-top: 0;
+                padding-bottom: 0px;
+                padding-right: 0px;
+                background-color: transparent;
+            }
+
+            #loginbox tr td:first-child {
+                display: block;
+                font-size: small;
+                padding-top: 2px; 
+                color: #DDD;
+            }
+
+            #loginbox tr:nth-child(4) td:first-child{
+                visibility: hidden;
+                font-size: smaller;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                border-left: 1px solid;
+                box-shadow: 0 0 5px 4px #3344BB;
+                display: block;
+                min-height: 800px;
+            }
+
+            #welcomeMessage {
+                text-align: right;
+                padding-right: 10px;
+            }
+
+            /* ]]> */
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="column span-12 headerContent">
+                <div><h1 class="alt">ks-lift</h1></div>
+            </div>
+            <div>
+                <img alt="" id="ajax-loader" style="display:none; margin-bottom: 0px; margin-left: 5px" src="/images/ajax-loader.gif"/>
+            </div>
+
+            <div class="column span-24 last" style="background-color: #000000;">
+                <span class="lift:Menu.builder?ul:class=dropdown%20dropdown-horizontal&li_item:class=ddselected&expandAll:true" ></span>	
+            </div>
+            <div class="column span-1"></div>
+            <div class="column span-22 last">
+                <div>
+                    <span class="lift:Msgs?showAll=true"></span>
+                    <hr class="space" />
+                </div>
+            </div>
+
+            <div class="column span-24 last mainContentDiv">
+                <div id="content" >
+                    <!-- The HTML content will go here -->
+                </div>
+            </div>
+
+            <div class="column span-24 last" style="text-align: center">
+            </div>
+
         </div>
-      </div>
-
-      <div class="column span-17 last">
-        <div id="content" >
-	  <!-- The HTML content will go here -->
-	</div>
-      </div>
-
-      <hr />
-      <div class="column span-23 last" style="text-align: center">
-        <h4 class="alt">
-          <a href="http://www.liftweb.net"><i>Lift</i></a> 
-	        is Copyright 2007-2010 WorldWide Conferencing, LLC.  Distributed under an Apache 2.0 License.</h4>
-      </div>
-      
-    </div>
-  </body>
+    </body>
 </html>

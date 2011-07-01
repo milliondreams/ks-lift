@@ -1,7 +1,98 @@
 <div class="lift:surround?with=default;at=content">
-  <h2>Welcome to your Amarok</h2>
-  <p>
-    
-  </p>
+    <head_merge>
+        <style type="text/css">
+            /* <![CDATA[ */
+            .statusFrom{
+                color: #444444;
+                font-weight: bold;
+            }
+
+            #newStatus{
+                height: auto;
+                width: auto;
+            }
+
+            #postAction{
+                margin: 2px;
+                text-align: right;
+            }
+
+            #newStatusHead{
+                color: #777777;
+                font-size: 14px;
+                font-weight: bold;
+                margin: 0 2px;
+            }
+
+            .statusContainer{
+                border-bottom: 1px solid #DDDDDD;
+                margin: 2px 15px 6px;
+            }
+
+            .statusTitle{
+                color: #999999;
+            }
+
+            #notloggedinStatusPost{
+                background-color: #B75200;
+                color: white;
+                font-size: 18px;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+
+            #notloggedinStatusPost > div{
+                padding: 20px 10px;
+            }
+
+            .timeline{
+                background-color: #FFFFFF;
+                border-radius: 2px 2px 2px 2px;
+                margin: 0 5px;
+                padding-top: 8px;
+                min-height: 600px;
+            }
+
+            #postBox{
+                background: none repeat scroll 0 0 #EEEEEE;
+                border-radius: 2px 2px 2px 2px;
+                margin: 5px;
+                padding: 5px;
+            }
+
+            /* ]]> */
+        </style>            
+    </head_merge>
+    <div>
+        <div class="lift:StatusSnippet.showUpdateForm">
+            <div id="loggedinStatusPost" class="column span-24 last">
+                <div class="column span-17">
+                    <div id="postBox">
+                        <div id="newStatusHead">Any updates?</div>
+                        <div id="newStatus" class="clearable" style="height: auto; width: auto;" rows="3" cols="77"></div>
+                        <div id="postAction"></div>
+                    </div>
+                </div>
+                <div class="column span-7 last">
+                    Profile brief here ...
+                </div>
+            </div>
+            <div id="notloggedinStatusPost" class="column span-24 last">
+                <div class="registerMessage">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="column span-17">
+        <div id="timeline" class="timeline lift:StatusSnippet.showTimeline">
+            <!-- div class="updateList"><a id="updateStatusList">Show new</a></div -->
+            <div id="statusList"></div>
+        </div>
+    </div>
+    <div class="column span-6 last">
+        Utilities
+    </div>
 </div>
 
