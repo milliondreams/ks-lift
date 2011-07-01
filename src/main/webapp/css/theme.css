@@ -16,21 +16,21 @@ root {
 }
 
 body{
-    background-color: #FFFFFF;
+    background-color: #AA8811;
     background-image: -webkit-gradient(
         linear,
         left bottom,
         left top,
-        color-stop(0.19, rgb(255,255,255)),
-        color-stop(1, rgb(189,182,189))
+        color-stop(0.19, #66FFFF),
+        color-stop(1, #22AAAA)
         );
     background-image: -moz-linear-gradient(
         center bottom,
-        rgb(255,255,255) 19%,
-        rgb(189,182,189) 100%
+        #66FFFF 19%,
+        #22AAAA 100%
         );
 }
 
 .container{
-    background-color: #0083A0;
+    background-color: #CDEB8B;
 }
