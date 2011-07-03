@@ -56,7 +56,7 @@ class StatusSnippet {
     println(update)
         
     S.notice("Status updated!")
-    addNewToTimeline(update) &
+    addNewToTimeline &
     JqId(JE.Str("newStatus")) ~> JqAttr("value", "")
   }
   
@@ -68,18 +68,11 @@ class StatusSnippet {
     "#statusList" #> listStatus(allUpdates)    
   }
   
-  def addNewToTimeline(savedStatus:Status):JsCmd = {
-    //def allUpdates = Status.findAll(("createdTime" -> ("$gt" -> formats.dateFormat.format(lastUpdate.getTime))),("createdTime" -> -1), Limit(10))
-    println("----------------------------------------------")
-    println("Current Time " + new DateTime())
-    println("Last update Time " + lastUpdate)
-        
-    //def allUpdates = Status where (_.createdTime after lastUpdate) fetch()
-    //def newstatus:NodeSeq = listStatus(allUpdates)
-    def newstatus:NodeSeq = renderStatus(savedStatus)
-    println("Status NodeSeq -- " + newstatus) 
-    lastUpdate = new DateTime()
-    JqId(Str("timeline")) ~> JqPrepend(newstatus)
+  def addNewToTimeline:JsCmd = {
+    def allUpdates = Status where (_.createdTime after lastUpdate) fetch()
+    listStatus(allUpdates).map{update =>
+      PrependHtml("timeline", update)  
+    }
   }
   
   def listStatus(manyStatus:List[Status]) = manyStatus.flatMap(status => renderStatus(status))
@@ -97,14 +90,4 @@ class StatusSnippet {
       <div class="statusTitle"><span class="statusFrom"></span> said this <span class="statusTime"></span></div> 
       <div class="statusMsg"></div>
     </div>
-    
-
-}
-
-case class JqPrepend(content: NodeSeq) extends JsExp with JsMember with JQueryRight with JQueryLeft {
-  println("In class -- " + content)
-  override val toJsCmd = {
-    println("The content -- " + content)
-    "prepend(" + fixHtmlFunc("inline", content){str => str }+ ")"
-  } 
 }
